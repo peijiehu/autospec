@@ -6,6 +6,7 @@ require 'pry'
 require 'selenium-webdriver'
 require 'capybara-webkit'
 require 'rest-client'
+require 'active_support'
 
 require_relative  'autospec/driver_helper'
 require_relative  'autospec/general_helper_module'

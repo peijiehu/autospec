@@ -1,4 +1,3 @@
-require 'active_support'
 module Autospec
   class Logger
 
