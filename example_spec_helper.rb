@@ -11,7 +11,7 @@ Capybara.default_wait_time = 10
 # set default js enabled driver based on user input(env variable),
 # which applies to all tests marked with :type => :feature
 # default is :selenium, and selenium uses :firefox by default
-driver_helper = Autospec::DriverHelper.new("#{Dir.pwd}/config/driver/saucelabs.yml")
+driver_helper = Autospec::DriverHelper.new("#{Dir.pwd}/config/autospec/saucelabs.yml")
 driver_to_use = driver_helper.driver
 Capybara.javascript_driver = driver_to_use.to_sym
 
@@ -20,7 +20,7 @@ app_host = ENV['r_env'] || begin
   Autospec.logger.debug "r_env is not set, using default env 'qa'"
   'qa'
 end
-env_yaml = YAML.load_file("#{Dir.pwd}/config/env.yml")
+env_yaml = YAML.load_file("#{Dir.pwd}/config/autospec/env.yml")
 Capybara.app_host = env_yaml[app_host]
 
 RSpec.configure do |config|
