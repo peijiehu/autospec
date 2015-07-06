@@ -1,6 +1,6 @@
 # Autospec
 
-## Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec)
+Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec)
 
 ## Installation and Usage
 

@@ -3,22 +3,10 @@ module Autospec
 
     LOCAL_DRIVERS = [:firefox]
     attr_accessor :user, :pass, :driver_to_use
-    attr_accessor :driver_config
+    attr_accessor :sauce_config
 
-    def initialize(config_file)
-      configure_driver_with(config_file)
-    end
-
-    # @param config_type [Symbol] eg. :driver, :env
-    # @param path_to_yaml_file [String]
-    def configure_driver_with(path_to_yaml_file)
-      begin
-        self.driver_config = YAML::load_file(path_to_yaml_file)
-      rescue Errno::ENOENT
-        Autospec::Logger.logger.warn("YAML configuration file couldn't be found. Using defaults."); return
-      rescue Psych::SyntaxError
-        Autospec::Logger.logger.warn("YAML configuration file contains invalid syntax. Using defaults."); return
-      end
+    def initialize(sauce_config)
+      self.sauce_config = sauce_config
     end
 
     def driver
@@ -39,7 +27,7 @@ module Autospec
         # Remote driver registration
         # Retrieve hub url, user credentials and browser info from saucelabs.yml
         if ENV['r_driver'].include?('saucelabs')
-          remote_driver_yaml = self.driver_config
+          remote_driver_yaml = self.sauce_config
           remote_capabilities = Selenium::WebDriver::Remote::Capabilities.new
           overrides_hash = remote_driver_yaml['overrides']
           if cmd_r_driver[1].nil?
@@ -58,7 +46,7 @@ module Autospec
             remote_capabilities = overrides_hash[cmd_r_driver[2]]['capabilities']
           end
 
-          Utils.logger.debug "remote_capabilities: #{remote_capabilities}"
+          Autospec.logger.debug "remote_capabilities: #{remote_capabilities}"
 
           default_remote_options = {
               :browser => :remote,
@@ -86,12 +74,12 @@ module Autospec
       # then bridge is a private method in Selenium::Webdriver::Driver
       bridge = Capybara.current_session.driver.browser.send :bridge
       session_id = bridge.session_id
-      Utils.logger.debug "bridge session_id: #{session_id}"
+      Autospec.logger.debug "bridge session_id: #{session_id}"
       http_auth = "https://#{self.user}:#{self.pass}@saucelabs.com/rest/v1/#{self.user}/jobs/#{session_id}"
       # to_json need to: require "active_support/core_ext", but will mess up the whole framework, require 'json' in this method solved it
       body = {"name" => new_name, "tags" => [new_tags]}.to_json
       # gem 'rest-client'
-      Utils.logger.debug "About to send request to saucelabs with url as #{http_auth} and body as #{body}"
+      Autospec.logger.debug "About to send request to saucelabs with url as #{http_auth} and body as #{body}"
       RestClient.put(http_auth, body, {:content_type => "application/json"})
     end
 

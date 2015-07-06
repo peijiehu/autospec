@@ -11,7 +11,8 @@ Capybara.default_wait_time = 10
 # set default js enabled driver based on user input(env variable),
 # which applies to all tests marked with :type => :feature
 # default is :selenium, and selenium uses :firefox by default
-driver_helper = Autospec::DriverHelper.new("#{Dir.pwd}/config/autospec/saucelabs.yml")
+sauce_config = YAML.load_file("#{Dir.pwd}/config/autospec/saucelabs.yml")
+driver_helper = Autospec::DriverHelper.new(sauce_config)
 driver_to_use = driver_helper.driver
 Capybara.javascript_driver = driver_to_use.to_sym
 

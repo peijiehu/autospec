@@ -1,6 +1,4 @@
 require 'capybara'
-require 'capybara/rspec'
-require 'site_prism'
 require 'yaml'
 require 'pry'
 require 'selenium-webdriver'
