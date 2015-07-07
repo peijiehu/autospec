@@ -2,10 +2,13 @@
 
 Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec)
 
-## Installation and Usage
+## Installation
 
-Install this gem and require it in your spec_helper.rb. Then add the following lines:
+Install this gem.
+In your spec_helper.rb, add the following lines before Rspec.configure:
 ```
+
+    require 'autospec'
 
     # set default js enabled driver based on user input(env variable),
     # which applies to all tests marked with :type => :feature
@@ -89,3 +92,6 @@ Install this gem and require it in your spec_helper.rb. Then add the following l
     duck: 'https://duckduckgo.com'
 
 ```
+
+#### logs/autospec.log
+(empty file, add it to gitignore)
