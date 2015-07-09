@@ -1,18 +1,16 @@
 # Autospec
 
-Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec)
+Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec).
+
 Demo [autospec-demo](https://github.com/peijiehu/autospec-demo)
 
 ## Installation
 
 Install this gem - add following to your Gemfile.
-```
 
     gem 'autospec'
 
-```
 In your spec_helper.rb, add the following lines before Rspec.configure:
-```
 
     require 'capybara'
     require 'capybara/rspec'
@@ -39,25 +37,20 @@ In your spec_helper.rb, add the following lines before Rspec.configure:
     env_yaml = YAML.load_file("#{Dir.pwd}/config/autospec/env.yml")
     Capybara.app_host = env_yaml[app_host]
 
-```
 And, add this in your Rspec.configure in spec_helper.rb,
-```
 
-  config.before :each do |example|
-    example_full_description = example.full_description
-    begin
-      driver_helper.set_sauce_session_name(example_full_description) if driver_to_use.include?('saucelabs') && !driver_to_use.nil?
-      Autospec.logger.debug "Finished setting saucelabs session name for #{example_full_description}"
-    rescue
-      Autospec.logger.debug "Failed setting saucelabs session name for #{example_full_description}"
+    config.before :each do |example|
+      example_full_description = example.full_description
+      begin
+        driver_helper.set_sauce_session_name(example_full_description) if driver_to_use.include?('saucelabs') && !driver_to_use.nil?
+        Autospec.logger.debug "Finished setting saucelabs session name for #{example_full_description}"
+      rescue
+        Autospec.logger.debug "Failed setting saucelabs session name for #{example_full_description}"
+      end
+      page.driver.allow_url '*' if driver_to_use == 'webkit'
     end
-    page.driver.allow_url '*' if driver_to_use == 'webkit'
-  end
 
-```
 #### config/autospec/saucelabs.yml
-
-```
 
     ---
     driver: 'remote'
@@ -109,17 +102,12 @@ And, add this in your Rspec.configure in spec_helper.rb,
                 platform: 'Windows 7'
                 screen-resolution: '1600x1200'
 
-```
-
 #### config/autospec/env.yml
-```
 
     ---
     qa: 'http://www.qa.xxx.com'
     prod: 'http://www.xxx.com'
     duck: 'https://duckduckgo.com'
-
-```
 
 #### logs/autospec.log
 (empty file, add it to gitignore)
@@ -137,11 +125,11 @@ And, add this in your Rspec.configure in spec_helper.rb,
 
 ## Usage
 To run specs
-```
+
     r_env=duck rspec                  # to run all specs, on duckduckgo.com
     r_driver=saucelabs rspec          # run all specs on saucelabs, with default OS and browser
     r_driver=saucelabs:sauce_username:platform_and_browser rspec
-```
+
 If your test doesn't care browser compatibility, but you still want javascript support, then go with headless webkit,
 run:
 ```
