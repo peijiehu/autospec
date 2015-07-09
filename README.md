@@ -4,7 +4,9 @@ Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/aut
 
 ## Installation
 
-Install this gem.
+Install this gem - add following to your Gemfile.
+    gem 'autospec'
+
 In your spec_helper.rb, add the following lines before Rspec.configure:
 ```
 
@@ -117,3 +119,19 @@ And, add this in your Rspec.configure in spec_helper.rb,
 
 #### logs/autospec.log
 (empty file, add it to gitignore)
+
+## Usage
+To run specs
+    r_env=duck rspec                  # to run all specs, on duckduckgo.com
+    r_driver=saucelabs rspec          # run all specs on saucelabs, with default OS and browser
+    r_driver=saucelabs:sauce_username:platform_and_browser rspec
+If your test doesn't care browser compatibility, but you still want javascript support, then go with headless webkit,
+run:
+```
+r_driver=webkit rspec
+```
+To run specs in parallel, with serialized stdout printing out after all specs are done
+(note that when running specs through 'parallel_rspec', options in .rspec_parallel will be used, instead of .rspec)
+```
+parallel_rspec --serialize-stdout -n 15 spec/
+```
