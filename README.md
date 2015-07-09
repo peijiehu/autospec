@@ -8,7 +8,15 @@ Install this gem.
 In your spec_helper.rb, add the following lines before Rspec.configure:
 ```
 
+    require 'capybara'
+    require 'capybara/rspec'
+    require 'site_prism'
     require 'autospec'
+
+    # if you want to include Autospec::PageHelperModule for your pages
+    # require 'page_objects/all_page_objects'
+
+    Capybara.run_server = false
 
     # set default js enabled driver based on user input(env variable),
     # which applies to all tests marked with :type => :feature
@@ -26,7 +34,21 @@ In your spec_helper.rb, add the following lines before Rspec.configure:
     Capybara.app_host = env_yaml[app_host]
 
 ```
+And, add this in your Rspec.configure in spec_helper.rb,
+```
 
+  config.before :each do |example|
+    example_full_description = example.full_description
+    begin
+      driver_helper.set_sauce_session_name(example_full_description) if driver_to_use.include?('saucelabs') && !driver_to_use.nil?
+      Autospec.logger.debug "Finished setting saucelabs session name for #{example_full_description}"
+    rescue
+      Autospec.logger.debug "Failed setting saucelabs session name for #{example_full_description}"
+    end
+    page.driver.allow_url '*' if driver_to_use == 'webkit'
+  end
+
+```
 #### config/autospec/saucelabs.yml
 
 ```
