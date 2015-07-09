@@ -1,12 +1,16 @@
 # Autospec
 
 Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec)
+Demo [autospec-demo](https://github.com/peijiehu/autospec-demo)
 
 ## Installation
 
 Install this gem - add following to your Gemfile.
+```
+
     gem 'autospec'
 
+```
 In your spec_helper.rb, add the following lines before Rspec.configure:
 ```
 
@@ -120,11 +124,24 @@ And, add this in your Rspec.configure in spec_helper.rb,
 #### logs/autospec.log
 (empty file, add it to gitignore)
 
+#### .rspec_parallel
+```
+
+--color
+--require spec_helper
+--format progress
+--format RspecJunitFormatter
+--out reports/ci_result_<%= ENV['TEST_ENV_NUMBER'] %>.xml
+
+```
+
 ## Usage
 To run specs
+```
     r_env=duck rspec                  # to run all specs, on duckduckgo.com
     r_driver=saucelabs rspec          # run all specs on saucelabs, with default OS and browser
     r_driver=saucelabs:sauce_username:platform_and_browser rspec
+```
 If your test doesn't care browser compatibility, but you still want javascript support, then go with headless webkit,
 run:
 ```
