@@ -6,6 +6,8 @@ Demo [autospec-demo](https://github.com/peijiehu/autospec-demo)
 
 ## Installation
 
+You can skip the installation and download the demo above instead.
+
 Install this gem - add following to your Gemfile.
 
     gem 'autospec'
@@ -112,7 +114,11 @@ And, add this in your Rspec.configure in spec_helper.rb,
 #### logs/autospec.log
 (empty file, add it to gitignore)
 
+#### reports/
+(empty directory for storing test results)
+
 #### .rspec_parallel
+when running specs through 'parallel_rspec', options in .rspec_parallel will be used, instead of .rspec. Results should be recorded in JUnit format under reports/, so CI like Jenkins can read and publish. Your .rspec_parallel should look like this:
 ```
 
 --color
@@ -128,7 +134,7 @@ To run specs
 
     r_env=duck rspec                  # to run all specs, on duckduckgo.com
     r_driver=saucelabs rspec          # run all specs on saucelabs, with default OS and browser
-    r_driver=saucelabs:sauce_username:platform_and_browser rspec
+    r_driver=saucelabs:peijie:win7_ff38 rspec # see config/autospec/saucelabs.yml for available user, os and browsers
 
 If your test doesn't care browser compatibility, but you still want javascript support, then go with headless webkit,
 run:
