@@ -22,7 +22,7 @@ module Autospec
     # Wait on all AJAX requests to finish
     def wait_for_ajax(timeout = Capybara.default_wait_time)
       wait(timeout: timeout, msg: "Timeout after waiting #{timeout} for all ajax requests to finish").until do
-        current_session.evaluate_script 'return jQuery.active == 0'
+        current_session.evaluate_script 'jQuery.active == 0'
       end
     end
 
