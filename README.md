@@ -1,5 +1,7 @@
 # Autospec
 
+[ ![Codeship Status for peijiehu/autospec](https://codeship.com/projects/0c9c8b50-1a09-0133-cb47-0a73787dedef/status?branch=master)](https://codeship.com/projects/94307)
+
 Gem prototype abstracted from [automation-rspec](https://github.com/peijiehu/automation-rspec).
 
 Demo [autospec-demo](https://github.com/peijiehu/autospec-demo)
