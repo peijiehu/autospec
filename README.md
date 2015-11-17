@@ -109,8 +109,8 @@ And, add this in your Rspec.configure in spec_helper.rb,
 #### config/autospec/env.yml
 
     ---
-    qa: 'http://www.qa.xxx.com'
-    prod: 'http://www.xxx.com'
+    qa: 'http://www.qa.duckduckgo.com'
+    prod: 'http://www.duckduckgo.com'
     duck: 'https://duckduckgo.com'
 
 #### logs/autospec.log
